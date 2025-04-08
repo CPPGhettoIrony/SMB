@@ -65,10 +65,8 @@ public class Player : MonoBehaviour
                 //Debug.Log("" + point.point.y + ", " + rb.transform.position.y);
                 if(point.point.y >= rb.transform.position.y + capsule.size.y * 0.8)
                     isJumping = false;
-                if(point.point.y >= rb.transform.position.y) {
-                    debugCollision = point.point;
+                if(point.point.y >= rb.transform.position.y) 
                     canWallJump = false;
-                }
             }
         }
     }
@@ -89,10 +87,8 @@ public class Player : MonoBehaviour
     public void Jump(InputAction.CallbackContext context) {
         if(isGrounded && context.performed) {
             isJumping = true;
-            if(canWallJump) {
+            if(canWallJump) 
                 hspeed = -face * speed;
-                Debug.Log("walljump: " + (-face) + " " + hspeed);
-            }
             jumpCounter = 0;
         } if(context.canceled)
             isJumping = false;
