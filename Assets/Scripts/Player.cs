@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
     public bool allowCameraXFollow, allowCameraYFollow;
     Vector3 cameraPosition;
 
-    bool isGrounded = false, isJumping = false, canWallJump = false, isCrouching = false, isSprinting = false;
+    bool isGrounded = false, isJumping = false, canWallJump = false, changeDirection = false, isCrouching = false;
     float jumpCounter = 0, movement, proxSpeed, hspeed = 0;
     float speed = 10, jumpMax = 15;
     int face = 1;
@@ -36,19 +36,24 @@ public class Player : MonoBehaviour
         animator.SetFloat("hspeed", Mathf.Abs(rb.linearVelocityX));
         animator.SetBool("grounded", isGrounded);
         animator.SetBool("jump", isJumping);
+        animator.SetBool("chdir", changeDirection);
 
         proxSpeed = movement * speed;
 
         Debug.DrawLine(rb.transform.position, debugCollision, Color.magenta);
         Debug.DrawLine(rb.transform.position, rb.transform.position + Vector3.left * capsule.size.x/2, Color.red);
 
-        if(Mathf.Abs(hspeed) > 0.1)
-            spriteRenderer.flipX = (hspeed >= 0);
+        if(Mathf.Abs(hspeed) > 0.1 && !canWallJump)
+            spriteRenderer.flipX = changeDirection?(hspeed < 0):(hspeed >= 0);
+        else if (canWallJump)
+            spriteRenderer.flipX = (face < 0);
 
         if(allowCameraXFollow) cameraPosition.x = rb.transform.position.x;
         if(allowCameraYFollow) cameraPosition.y = rb.transform.position.y;
 
         cam.transform.position = cameraPosition;
+
+        changeDirection = proxSpeed * hspeed < 0;
         
     }
 
@@ -63,6 +68,7 @@ public class Player : MonoBehaviour
         if(rb.linearVelocityX != hspeed && rb.linearVelocityX == 0 && !canWallJump) {
             hspeed = 0;
             canWallJump = Mathf.Abs(rb.linearVelocityY) > 0.1;
+            if(canWallJump) animator.SetTrigger("walljump");
         }
 
                 if(proxSpeed > rb.linearVelocityX)  hspeed += 0.5f;
@@ -103,8 +109,10 @@ public class Player : MonoBehaviour
     public void Jump(InputAction.CallbackContext context) {
         if(isGrounded && context.performed) {
             isJumping = true;
-            if(canWallJump) 
+            if(canWallJump) {
                 hspeed = -face * speed;
+                //canWallJump = false;
+            }
             jumpCounter = 0;
         } if(context.canceled)
             isJumping = false;

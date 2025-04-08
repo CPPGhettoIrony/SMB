@@ -7334,6 +7334,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2025426103792319660, guid: 71a40db0d45c910a7880bed5ccf22d82, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.99
+      objectReference: {fileID: 0}
     - target: {fileID: 3406928807966823604, guid: 71a40db0d45c910a7880bed5ccf22d82, type: 3}
       propertyPath: m_Name
       value: Mario
@@ -7384,7 +7388,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9019160372486549687, guid: 71a40db0d45c910a7880bed5ccf22d82, type: 3}
       propertyPath: allowCameraYFollow
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
