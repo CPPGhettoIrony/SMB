@@ -8,8 +8,13 @@ public class Player : MonoBehaviour
     Rigidbody2D rb;
     CapsuleCollider2D capsule;
     Animator animator;
+    SpriteRenderer spriteRenderer;
 
     Vector2 debugCollision = Vector2.zero;
+
+    public Camera cam;
+    public bool allowCameraXFollow, allowCameraYFollow;
+    Vector3 cameraPosition;
 
     bool isGrounded = false, isJumping = false, canWallJump = false, isCrouching = false, isSprinting = false;
     float jumpCounter = 0, movement, proxSpeed, hspeed = 0;
@@ -18,9 +23,11 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        capsule = GetComponent<CapsuleCollider2D>();
-        animator = GetComponent<Animator>();
+        rb              = GetComponent<Rigidbody2D>();
+        capsule         = GetComponent<CapsuleCollider2D>();
+        animator        = GetComponent<Animator>();
+        spriteRenderer  = GetComponent<SpriteRenderer>();
+        cameraPosition  = cam.transform.position;
     }
 
     void Update() {
@@ -34,6 +41,15 @@ public class Player : MonoBehaviour
 
         Debug.DrawLine(rb.transform.position, debugCollision, Color.magenta);
         Debug.DrawLine(rb.transform.position, rb.transform.position + Vector3.left * capsule.size.x/2, Color.red);
+
+        if(Mathf.Abs(hspeed) > 0.1)
+            spriteRenderer.flipX = (hspeed >= 0);
+
+        if(allowCameraXFollow) cameraPosition.x = rb.transform.position.x;
+        if(allowCameraYFollow) cameraPosition.y = rb.transform.position.y;
+
+        cam.transform.position = cameraPosition;
+        
     }
 
     void FixedUpdate()
@@ -92,5 +108,12 @@ public class Player : MonoBehaviour
             jumpCounter = 0;
         } if(context.canceled)
             isJumping = false;
+    }
+
+    public void Sprint(InputAction.CallbackContext context) {
+        if(context.performed) 
+            speed = 20;
+        else if(context.canceled)
+            speed = 10;
     }
 }

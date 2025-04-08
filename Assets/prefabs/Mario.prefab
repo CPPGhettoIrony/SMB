@@ -360,8 +360,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda32651b8e672ec0afce43ec307f6ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
-  jumpMax: 10
+  cam: {fileID: 3710116461556321878}
+  allowCameraXFollow: 0
+  allowCameraYFollow: 0
 --- !u!114 &2375032594736185769
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -424,7 +425,19 @@ MonoBehaviour:
     m_ActionId: f1ba0d36-48eb-4cd5-b651-1c94a6531f70
     m_ActionName: 'Player/Jump[/Keyboard/space]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 9019160372486549687}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: Sprint
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 641cd816-40e6-41b4-8c3d-04687c349290
     m_ActionName: Player/Sprint
   - m_PersistentCalls:

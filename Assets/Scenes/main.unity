@@ -7378,6 +7378,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9019160372486549687, guid: 71a40db0d45c910a7880bed5ccf22d82, type: 3}
+      propertyPath: allowCameraXFollow
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9019160372486549687, guid: 71a40db0d45c910a7880bed5ccf22d82, type: 3}
+      propertyPath: allowCameraYFollow
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
