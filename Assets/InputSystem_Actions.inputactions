@@ -124,9 +124,9 @@
                     "name": "",
                     "id": "4f4649ac-64a8-4a73-af11-b3faef356a4d",
                     "path": "<Keyboard>/downArrow",
-                    "interactions": "",
+                    "interactions": "Hold(duration=0.01)",
                     "processors": "",
-                    "groups": "Gamepad",
+                    "groups": ";Keyboard&Mouse",
                     "action": "Crouch",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -135,9 +135,9 @@
                     "name": "",
                     "id": "93997fd5-08b4-4d9e-8fe3-0d5e29eda025",
                     "path": "<Gamepad>/dpad/down",
-                    "interactions": "",
+                    "interactions": "Hold(duration=0.01)",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Gamepad",
                     "action": "Crouch",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -148,7 +148,7 @@
                     "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Gamepad",
                     "action": "Sprint",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -159,7 +159,7 @@
                     "path": "<Keyboard>/leftShift",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Keyboard&Mouse",
                     "action": "Sprint",
                     "isComposite": false,
                     "isPartOfComposite": false

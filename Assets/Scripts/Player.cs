@@ -1,4 +1,5 @@
 using System;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,6 +12,7 @@ public class Player : MonoBehaviour
     SpriteRenderer spriteRenderer;
 
     Vector2 debugCollision = Vector2.zero;
+    Vector2 crouchSize, dumpSize, normalSize, crouchOffset, dumpOffset, normalOffset;
 
     public Camera cam;
     public bool allowCameraXFollow, allowCameraYFollow;
@@ -27,7 +29,18 @@ public class Player : MonoBehaviour
         capsule         = GetComponent<CapsuleCollider2D>();
         animator        = GetComponent<Animator>();
         spriteRenderer  = GetComponent<SpriteRenderer>();
+
         cameraPosition  = cam.transform.position;
+
+        normalOffset    = capsule.offset;
+        crouchOffset    = capsule.offset;
+        crouchOffset.y  = 0.7f;
+
+        normalSize      = capsule.size;
+        crouchSize      = capsule.size;
+        crouchSize.y    = capsule.size.y/2;
+        dumpSize        = capsule.size;
+        dumpSize.y      = capsule.size.y * 0.8f; 
     }
 
     void Update() {
@@ -37,8 +50,12 @@ public class Player : MonoBehaviour
         animator.SetBool("grounded", isGrounded);
         animator.SetBool("jump", isJumping);
         animator.SetBool("chdir", changeDirection);
+        animator.SetBool("crouch", isCrouching);
 
-        proxSpeed = movement * speed;
+        if(isCrouching) 
+            proxSpeed = 0;
+        else 
+            proxSpeed = movement * speed; 
 
         Debug.DrawLine(rb.transform.position, debugCollision, Color.magenta);
         Debug.DrawLine(rb.transform.position, rb.transform.position + Vector3.left * capsule.size.x/2, Color.red);
@@ -53,7 +70,7 @@ public class Player : MonoBehaviour
 
         cam.transform.position = cameraPosition;
 
-        changeDirection = proxSpeed * hspeed < 0;
+        changeDirection = proxSpeed * hspeed < 0 && !isCrouching;
         
     }
 
@@ -65,7 +82,7 @@ public class Player : MonoBehaviour
             if(jumpCounter>=jumpMax) isJumping = false;
         } 
 
-        if(rb.linearVelocityX != hspeed && rb.linearVelocityX == 0 && !canWallJump) {
+        if(rb.linearVelocityX != hspeed && rb.linearVelocityX == 0 && !canWallJump && !isCrouching) {
             hspeed = 0;
             canWallJump = Mathf.Abs(rb.linearVelocityY) > 0.1;
             if(canWallJump) animator.SetTrigger("walljump");
@@ -109,10 +126,8 @@ public class Player : MonoBehaviour
     public void Jump(InputAction.CallbackContext context) {
         if(isGrounded && context.performed) {
             isJumping = true;
-            if(canWallJump) {
+            if(canWallJump) 
                 hspeed = -face * speed;
-                //canWallJump = false;
-            }
             jumpCounter = 0;
         } if(context.canceled)
             isJumping = false;
@@ -123,5 +138,20 @@ public class Player : MonoBehaviour
             speed = 20;
         else if(context.canceled)
             speed = 10;
+    }
+
+    public void Crouch(InputAction.CallbackContext context) {
+        if(context.performed) {
+            if(isGrounded) {
+                isCrouching = true;
+                capsule.size = crouchSize;
+                capsule.offset = crouchOffset;
+            }
+            canWallJump = false;
+        }else if(context.canceled) {
+            isCrouching = false;
+            capsule.size = normalSize;
+            capsule.offset = normalOffset;
+        }
     }
 }
