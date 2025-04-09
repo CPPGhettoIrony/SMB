@@ -135,7 +135,7 @@
                     "name": "",
                     "id": "93997fd5-08b4-4d9e-8fe3-0d5e29eda025",
                     "path": "<Gamepad>/dpad/down",
-                    "interactions": "Hold(duration=0.01)",
+                    "interactions": "Hold(duration=0.01,pressPoint=0.1)",
                     "processors": "",
                     "groups": ";Gamepad",
                     "action": "Crouch",
