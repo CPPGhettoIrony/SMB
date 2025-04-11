@@ -52,7 +52,7 @@ public class Player : MonoBehaviour
         animator.SetBool("chdir", changeDirection);
         animator.SetBool("crouch", isCrouching);
 
-        if(isCrouching) 
+        if(isCrouching && isGrounded) 
             proxSpeed = 0;
         else 
             proxSpeed = movement * speed; 
