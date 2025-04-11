@@ -41,5 +41,23 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: bg_front
+    uniqueID: 2892560757
+    locked: 0
+  - name: fg_back
+    uniqueID: 6985991
+    locked: 0
+  - name: fg_front
+    uniqueID: 4035315507
+    locked: 0
+  - name: tileset_back
+    uniqueID: 3433743105
+    locked: 0
+  - name: player
+    uniqueID: 3201034653
+    locked: 0
+  - name: tileset_front
+    uniqueID: 2861438833
+    locked: 0
   m_RenderingLayers:
   - Default

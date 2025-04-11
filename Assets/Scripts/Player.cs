@@ -14,9 +14,9 @@ public class Player : MonoBehaviour
     Vector2 debugCollision = Vector2.zero;
     Vector2 crouchSize, dumpSize, normalSize, crouchOffset, dumpOffset, normalOffset;
 
-    public Camera cam;
-    public bool allowCameraXFollow, allowCameraYFollow;
-    Vector3 cameraPosition;
+    //public Camera cam;
+    //public bool allowCameraXFollow, allowCameraYFollow;
+    //Vector3 cameraPosition;
 
     bool isGrounded = false, isJumping = false, canWallJump = false, changeDirection = false, isCrouching = false;
     float jumpCounter = 0, movement, proxSpeed, hspeed = 0;
@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
         animator        = GetComponent<Animator>();
         spriteRenderer  = GetComponent<SpriteRenderer>();
 
-        cameraPosition  = cam.transform.position;
+        //cameraPosition  = cam.transform.position;
 
         normalOffset    = capsule.offset;
         crouchOffset    = capsule.offset;
@@ -57,18 +57,17 @@ public class Player : MonoBehaviour
         else 
             proxSpeed = movement * speed; 
 
-        Debug.DrawLine(rb.transform.position, debugCollision, Color.magenta);
-        Debug.DrawLine(rb.transform.position, rb.transform.position + Vector3.left * capsule.size.x/2, Color.red);
+        //Debug.DrawLine(rb.transform.position, debugCollision, Color.magenta);
+        //Debug.DrawLine(rb.transform.position, rb.transform.position + Vector3.left * capsule.size.x/2, Color.red);
 
         if(Mathf.Abs(hspeed) > 0.1 && !canWallJump)
             spriteRenderer.flipX = changeDirection?(hspeed < 0):(hspeed >= 0);
         else if (canWallJump)
             spriteRenderer.flipX = (face < 0);
 
-        if(allowCameraXFollow) cameraPosition.x = rb.transform.position.x;
-        if(allowCameraYFollow) cameraPosition.y = rb.transform.position.y;
-
-        cam.transform.position = cameraPosition;
+        //if(allowCameraXFollow) cameraPosition.x = rb.transform.position.x;
+        //if(allowCameraYFollow) cameraPosition.y = rb.transform.position.y;
+        //cam.transform.position = cameraPosition;
 
         changeDirection = proxSpeed * hspeed < 0 && !isCrouching;
         
