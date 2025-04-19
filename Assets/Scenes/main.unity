@@ -3882,7 +3882,7 @@ MonoBehaviour:
   m_ComponentVersion: 2
   m_LightType: 4
   m_BlendStyleIndex: 0
-  m_FalloffIntensity: 0.5
+  m_FalloffIntensity: 0.393
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
   m_LightVolumeIntensity: 1
@@ -3903,12 +3903,12 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0, y: -0.00000011920929, z: 0}
-    m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
+    m_Center: {x: -0.00024998188, y: -0.000100016594, z: 0}
+    m_Extent: {x: 1.00045, y: 1.0009, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
-  m_PointLightInnerRadius: 0
-  m_PointLightOuterRadius: 1
+  m_PointLightInnerRadius: 9
+  m_PointLightOuterRadius: 12.323953
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -3927,8 +3927,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 619394800}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0.99966836, w: -0.025753574}
+  m_LocalPosition: {x: 0, y: -0.08, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4583,7 +4583,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2025426103792319660, guid: 71a40db0d45c910a7880bed5ccf22d82, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.0000047683716
+      value: -0.0000014305115
       objectReference: {fileID: 0}
     - target: {fileID: 2025426103792319660, guid: 71a40db0d45c910a7880bed5ccf22d82, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4607,7 +4607,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4401960808964378423, guid: 71a40db0d45c910a7880bed5ccf22d82, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 77.52
+      value: -1.31
       objectReference: {fileID: 0}
     - target: {fileID: 4401960808964378423, guid: 71a40db0d45c910a7880bed5ccf22d82, type: 3}
       propertyPath: m_LocalPosition.y
