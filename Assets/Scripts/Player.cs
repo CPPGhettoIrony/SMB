@@ -11,14 +11,14 @@ public class Player : MonoBehaviour
     Animator animator;
     SpriteRenderer spriteRenderer;
 
-    Vector2 debugCollision = Vector2.zero;
-    Vector2 crouchSize, dumpSize, normalSize, crouchOffset, dumpOffset, normalOffset;
+    Vector2 crouchSize, dumpSize, normalSize, crouchOffset, normalOffset;
 
     //public Camera cam;
     //public bool allowCameraXFollow, allowCameraYFollow;
     //Vector3 cameraPosition;
 
     bool isGrounded = false, isJumping = false, canWallJump = false, changeDirection = false, isCrouching = false;
+    public bool levelEnd = false;
     float jumpCounter = 0, movement, proxSpeed, hspeed = 0;
     float speed = 10, jumpMax = 15;
     int face = 1;
@@ -29,8 +29,6 @@ public class Player : MonoBehaviour
         capsule         = GetComponent<CapsuleCollider2D>();
         animator        = GetComponent<Animator>();
         spriteRenderer  = GetComponent<SpriteRenderer>();
-
-        //cameraPosition  = cam.transform.position;
 
         normalOffset    = capsule.offset;
         crouchOffset    = capsule.offset;
@@ -51,6 +49,12 @@ public class Player : MonoBehaviour
         animator.SetBool("jump", isJumping);
         animator.SetBool("chdir", changeDirection);
         animator.SetBool("crouch", isCrouching);
+
+        if (levelEnd) {
+            proxSpeed = 0;
+            spriteRenderer.flipX = false;
+            return;
+        }
 
         if(isCrouching && isGrounded) 
             proxSpeed = 0;
@@ -115,14 +119,15 @@ public class Player : MonoBehaviour
             isGrounded = false;    
     }
 
-
     public void Move(InputAction.CallbackContext context) {
+        if(levelEnd) return;
         movement = context.ReadValue<Vector2>().x;
         if(movement != 0)
             face = (int)(movement/Math.Abs(movement));
     }
 
     public void Jump(InputAction.CallbackContext context) {
+        if(levelEnd) return;
         if(isGrounded && context.performed) {
             isJumping = true;
             if(canWallJump) 
@@ -133,6 +138,7 @@ public class Player : MonoBehaviour
     }
 
     public void Sprint(InputAction.CallbackContext context) {
+        if(levelEnd) return;
         if(context.performed) 
             speed = 20;
         else if(context.canceled)
@@ -140,6 +146,7 @@ public class Player : MonoBehaviour
     }
 
     public void Crouch(InputAction.CallbackContext context) {
+        if(levelEnd) return;
         if(context.performed) {
             if(isGrounded) {
                 isCrouching = true;
