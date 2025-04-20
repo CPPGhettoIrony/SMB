@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -21,6 +23,10 @@ public class Player : MonoBehaviour
     float jumpCounter = 0, movement, proxSpeed, hspeed = 0;
     float speed = 10, jumpMax = 15;
     int face = 1;
+
+    public TextMeshProUGUI coinText;
+
+    public static int Coins = 0, Lives = 5;
 
     void Start()
     {
@@ -73,6 +79,8 @@ public class Player : MonoBehaviour
         //cam.transform.position = cameraPosition;
 
         changeDirection = proxSpeed * hspeed < 0 && !isCrouching;
+
+        coinText.text = "x " + Coins;
         
     }
 
@@ -100,15 +108,27 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.layer == 3) {
-            isGrounded = true; 
-            foreach (ContactPoint2D point in collision.contacts) {
-                //Debug.Log("" + point.point.y + ", " + rb.transform.position.y);
-                if(point.point.y >= rb.transform.position.y + capsule.size.y * 0.8)
-                    isJumping = false;
-                if(point.point.y >= rb.transform.position.y) 
-                    canWallJump = false;
-            }
+        switch(collision.gameObject.layer) {
+            case 3:
+                isGrounded = true; 
+                foreach (ContactPoint2D point in collision.contacts) {
+                    //Debug.Log("" + point.point.y + ", " + rb.transform.position.y);
+                    if(point.point.y >= rb.transform.position.y + capsule.size.y * 0.8)
+                        isJumping = false;
+                    if(point.point.y >= rb.transform.position.y) 
+                        canWallJump = false;
+                }
+            break;
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        switch(collision.gameObject.layer){
+            case 7:
+                collision.gameObject.GetComponent<Coin>().Take();
+                ++Coins;
+            break;
         }
     }
 
