@@ -3,6 +3,8 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.Universal;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Player : MonoBehaviour
@@ -12,14 +14,11 @@ public class Player : MonoBehaviour
     CapsuleCollider2D capsule;
     Animator animator;
     SpriteRenderer spriteRenderer;
+    Light2D spotLight;
 
     Vector2 crouchSize, dumpSize, normalSize, crouchOffset, normalOffset;
 
-    //public Camera cam;
-    //public bool allowCameraXFollow, allowCameraYFollow;
-    //Vector3 cameraPosition;
-
-    bool isGrounded = false, isJumping = false, canWallJump = false, changeDirection = false, isCrouching = false;
+    bool isGrounded = false, isJumping = false, canWallJump = false, changeDirection = false, isCrouching = false, canGetHurt = true, dead = false;
     public bool levelEnd = false;
     float jumpCounter = 0, movement, proxSpeed, hspeed = 0;
     float speed = 10, jumpMax = 15;
@@ -29,7 +28,8 @@ public class Player : MonoBehaviour
     public Image healthHUD;
     public Sprite[] healthSpr;
 
-    public static int Coins = 0, Lives = 5, HP = 4;
+    public static int Coins = 0;
+    int HP = 4;
 
     void Start()
     {
@@ -37,6 +37,7 @@ public class Player : MonoBehaviour
         capsule         = GetComponent<CapsuleCollider2D>();
         animator        = GetComponent<Animator>();
         spriteRenderer  = GetComponent<SpriteRenderer>();
+        spotLight       = GetComponent<Light2D>();
 
         normalOffset    = capsule.offset;
         crouchOffset    = capsule.offset;
@@ -47,6 +48,8 @@ public class Player : MonoBehaviour
         crouchSize.y    = capsule.size.y/2;
         dumpSize        = capsule.size;
         dumpSize.y      = capsule.size.y * 0.8f; 
+
+        StartCoroutine(Begin());
     }
 
     void Update() {
@@ -57,6 +60,8 @@ public class Player : MonoBehaviour
         animator.SetBool("jump", isJumping);
         animator.SetBool("chdir", changeDirection);
         animator.SetBool("crouch", isCrouching);
+
+        healthHUD.sprite = healthSpr[HP];
 
         if (levelEnd) {
             proxSpeed = 0;
@@ -89,6 +94,13 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
+
+        if(dead) {
+            rb.linearVelocityY =  jumpMax-jumpCounter;
+            if(jumpCounter<=jumpMax*2) jumpCounter += 0.4f;
+            return;
+        }
+
         if(isJumping) {
             rb.linearVelocityY =  jumpMax-jumpCounter;
             jumpCounter += 0.4f;
@@ -122,7 +134,120 @@ public class Player : MonoBehaviour
                         canWallJump = false;
                 }
             break;
+            case 9:
+
+                Rigidbody2D erb = collision.gameObject.GetComponent<Rigidbody2D>();
+                BoxCollider2D ebc =  collision.gameObject.GetComponent<BoxCollider2D>();
+                Enemy e = collision.gameObject.GetComponent<Enemy>();
+                float yDamageLine =  erb.transform.position.y - ebc.bounds.size.y * 0.75f;
+
+                if (!isGrounded && rb.transform.position.y > yDamageLine) {
+                    e.kill();
+                    isJumping = true;
+                    break;
+                }
+
+                takeDamage();
+
+            break;
         }
+    }
+
+    void takeDamage() {
+        if (!canGetHurt) return;
+        if(HP <= 1) {
+            StartCoroutine(Death());
+            return;
+        }
+        StartCoroutine(Hurt());
+    }
+
+    IEnumerator Death() {
+        HP = 0;
+        jumpCounter = 0;
+        animator.SetTrigger("dead");
+        rb.bodyType = RigidbodyType2D.Kinematic;
+        rb.linearVelocity = Vector2.zero;
+        dead = true;
+        StartCoroutine(End());
+        yield break;
+    }
+
+    IEnumerator Hurt() {
+        canGetHurt = false;
+        --HP;
+        for(int i=0; i<10; ++i) {
+            spriteRenderer.color = new Color(1f, 0.5f, 0.5f, (i%2==0)?0.9f:0.5f);
+            yield return new WaitForSeconds(0.1f);
+        }
+        spriteRenderer.color = Color.white;
+        canGetHurt = true;
+    }
+
+    public void endLevel() {
+        StartCoroutine(End());
+    }
+
+    IEnumerator End()
+    {
+        spotLight.enabled = true;
+
+        float duration = 1f; // Duration of the transition
+        float elapsedTime = 0f;
+
+        // Store initial and target values
+        float initialInnerRadius = 40f;
+        float targetInnerRadius = 0f;
+
+        float initialOuterRadius = 41f;
+        float targetOuterRadius = 0.01f;
+
+        // Smoothly transition over time
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime / duration);
+
+            spotLight.pointLightInnerRadius = Mathf.Lerp(initialInnerRadius, targetInnerRadius, t);
+            spotLight.pointLightOuterRadius = Mathf.Lerp(initialOuterRadius, targetOuterRadius, t);
+
+            yield return null;
+        }
+
+
+        // Wait before loading the scene
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene("main");
+    }
+
+    IEnumerator Begin() {
+
+        spotLight.enabled = true;
+
+        float duration = 1f; // Duration of the transition
+        float elapsedTime = 0f;
+
+        // Store initial and target values
+        float initialInnerRadius = 0f;
+        float targetInnerRadius = 40f;
+
+        float initialOuterRadius = 0.01f;
+        float targetOuterRadius = 41f;
+
+        // Smoothly transition over time
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime / duration);
+
+            spotLight.pointLightInnerRadius = Mathf.Lerp(initialInnerRadius, targetInnerRadius, t);
+            spotLight.pointLightOuterRadius = Mathf.Lerp(initialOuterRadius, targetOuterRadius, t);
+
+            yield return null;
+        }
+
+        spotLight.enabled = false;
+
     }
 
     void OnTriggerEnter2D(Collider2D collision)

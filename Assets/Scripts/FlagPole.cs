@@ -26,6 +26,7 @@ public class FlagPole : MonoBehaviour
         triggered = true;
         player.GetComponent<Player>().levelEnd = true;
         yield return new WaitForSeconds(2);
+        player.GetComponent<Player>().endLevel();
         keepFalling = false;
     }
 

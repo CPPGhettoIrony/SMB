@@ -309,15 +309,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: mario_6
+      name: dead
       rect:
         serializedVersion: 2
-        x: 47
-        y: 93
-        width: 33
-        height: 31
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 64
+        y: 96
+        width: 16
+        height: 29
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -763,6 +763,7 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       crouch: 596265009102276827
+      dead: 8166822304883188681
       dump: 9170902424559430875
       jump_down: 580901737
       jump_up: -1934637215726385523
@@ -777,7 +778,6 @@ TextureImporter:
       mario_21: -2080324268
       mario_3: 711369809112827297
       mario_5: 2327948112539037706
-      mario_6: 8166822304883188681
       run_0: -3077652091846432431
       run_1: -1115847682
       run_2: -1007540336
