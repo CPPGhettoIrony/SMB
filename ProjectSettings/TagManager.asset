@@ -8,12 +8,12 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Ground
+  - ground
   - Water
   - UI
   - flagPole
   - coin
-  - 
+  - level
   - 
   - 
   - 

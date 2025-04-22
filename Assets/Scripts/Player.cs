@@ -3,6 +3,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -25,8 +26,10 @@ public class Player : MonoBehaviour
     int face = 1;
 
     public TextMeshProUGUI coinText;
+    public Image healthHUD;
+    public Sprite[] healthSpr;
 
-    public static int Coins = 0, Lives = 5;
+    public static int Coins = 0, Lives = 5, HP = 4;
 
     void Start()
     {
