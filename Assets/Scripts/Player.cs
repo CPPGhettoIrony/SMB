@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.Universal;
@@ -15,6 +16,8 @@ public class Player : MonoBehaviour
     Animator animator;
     SpriteRenderer spriteRenderer;
     Light2D spotLight;
+
+    public GameObject zone;
 
     Vector2 crouchSize, dumpSize, normalSize, crouchOffset, normalOffset;
 
@@ -116,24 +119,42 @@ public class Player : MonoBehaviour
                 if(proxSpeed > rb.linearVelocityX)  hspeed += 0.5f;
         else    if(proxSpeed < rb.linearVelocityX)  hspeed -= 0.5f;
 
-        //Debug.Log(hspeed);
-
         rb.linearVelocityX = hspeed;
+
+        if (rb.transform.position.y < zone.transform.position.y - zone.GetComponent<BoxCollider2D>().bounds.size.y/2 - capsule.bounds.size.y) 
+            StartCoroutine(Death());
     }
+
+    void collideWithFloor(Collision2D collision) {
+
+        isGrounded = true; 
+
+        foreach (ContactPoint2D point in collision.contacts) {
+            //Debug.Log("" + point.point.y + ", " + rb.transform.position.y);
+            if(point.point.y >= rb.transform.position.y + capsule.size.y * 0.8)
+                isJumping = false;
+            if(point.point.y >= rb.transform.position.y) 
+                canWallJump = false;
+        }
+
+    } 
 
     void OnCollisionEnter2D(Collision2D collision)
     {
         switch(collision.gameObject.layer) {
+
+            case 10:
+
+                if (isJumping && !isGrounded && !canWallJump)
+                        collision.gameObject.GetComponent<Block>().hit();
+                collideWithFloor(collision);
+
+                break;
+
             case 3:
-                isGrounded = true; 
-                foreach (ContactPoint2D point in collision.contacts) {
-                    //Debug.Log("" + point.point.y + ", " + rb.transform.position.y);
-                    if(point.point.y >= rb.transform.position.y + capsule.size.y * 0.8)
-                        isJumping = false;
-                    if(point.point.y >= rb.transform.position.y) 
-                        canWallJump = false;
-                }
-            break;
+                collideWithFloor(collision);
+                break;
+
             case 9:
 
                 Rigidbody2D erb = collision.gameObject.GetComponent<Rigidbody2D>();
@@ -262,7 +283,7 @@ public class Player : MonoBehaviour
 
     void OnCollisionExit2D(Collision2D collision)
     {
-        if(collision.gameObject.layer == 3) 
+        if(collision.gameObject.layer == 3 || collision.gameObject.layer == 10) 
             isGrounded = false;    
     }
 

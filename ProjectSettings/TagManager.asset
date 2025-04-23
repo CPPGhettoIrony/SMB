@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - block
   layers:
   - Default
   - TransparentFX
@@ -15,7 +16,7 @@ TagManager:
   - coin
   - level
   - enemy
-  - 
+  - block
   - 
   - 
   - 

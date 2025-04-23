@@ -27,7 +27,7 @@ public class Goomba : MonoBehaviour, Enemy
     void FixedUpdate()
     {
         if(dead) return;
-        if (rb.linearVelocityX != hspeed)
+        if (rb.linearVelocityX != hspeed && rb.linearVelocityY == 0)
             direction = -direction;
 
         hspeed = direction * speed;
