@@ -145,7 +145,10 @@ public class Player : MonoBehaviour
 
             case 10:
 
-                if (isJumping && !isGrounded && !canWallJump)
+                BoxCollider2D bc =  collision.gameObject.GetComponent<BoxCollider2D>();
+                float yHitLine =  bc.transform.position.y - bc.bounds.size.y - capsule.size.y - 0.1f;
+
+                if (isJumping && !canWallJump && rb.transform.position.y > yHitLine)
                         collision.gameObject.GetComponent<Block>().hit();
                 collideWithFloor(collision);
 
