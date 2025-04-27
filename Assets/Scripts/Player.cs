@@ -32,6 +32,7 @@ public class Player : MonoBehaviour
     public Sprite[] healthSpr;
 
     public static int Coins = 0;
+    public static float xPos = 0;
     int HP = 4;
 
     void Start()
@@ -98,6 +99,8 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
 
+        xPos = transform.position.x;
+
         if(dead) {
             rb.linearVelocityY =  jumpMax-jumpCounter;
             if(jumpCounter<=jumpMax*2) jumpCounter += 0.4f;
@@ -143,12 +146,29 @@ public class Player : MonoBehaviour
     {
         switch(collision.gameObject.layer) {
 
+            case 11:
+
+                int type = collision.gameObject.GetComponent<Powerup>().getType();
+
+                switch(type) {
+                    case 1:
+                        if(HP < 4) ++HP;
+                    break;
+                    case 2:
+                        takeDamage();
+                    break;
+                }
+
+                Destroy(collision.gameObject);
+
+            break;
+
             case 10:
 
                 BoxCollider2D bc =  collision.gameObject.GetComponent<BoxCollider2D>();
-                float yHitLine =  bc.transform.position.y - bc.bounds.size.y - capsule.size.y - 0.1f;
+                float yHitLine =  bc.transform.position.y - bc.bounds.size.y - capsule.size.y + 0.1f;
 
-                if (isJumping && !canWallJump && rb.transform.position.y > yHitLine)
+                if (isJumping && rb.transform.position.y > yHitLine)
                         collision.gameObject.GetComponent<Block>().hit();
                 collideWithFloor(collision);
 

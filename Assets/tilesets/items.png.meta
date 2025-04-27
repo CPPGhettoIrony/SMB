@@ -9391,9 +9391,9 @@ TextureImporter:
       name: items_421
       rect:
         serializedVersion: 2
-        x: 411
+        x: 409
         y: 290
-        width: 14
+        width: 16
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -9415,7 +9415,7 @@ TextureImporter:
         serializedVersion: 2
         x: 426
         y: 290
-        width: 14
+        width: 16
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -17931,8 +17931,8 @@ TextureImporter:
         y: 103
         width: 16
         height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 2
+      pivot: {x: 0.5, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -17953,8 +17953,8 @@ TextureImporter:
         y: 103
         width: 16
         height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 2
+      pivot: {x: 0.5, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
