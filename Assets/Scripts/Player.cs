@@ -11,6 +11,8 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
 
+    public string nextScene;
+
     Rigidbody2D rb;
     CapsuleCollider2D capsule;
     Animator animator;
@@ -18,6 +20,9 @@ public class Player : MonoBehaviour
     Light2D spotLight;
 
     public GameObject zone;
+
+    public AudioClip jumpSFX, coinSFX, hurtSFX, deathSFX;
+    AudioSource audioSource;
 
     Vector2 crouchSize, dumpSize, normalSize, crouchOffset, normalOffset;
 
@@ -42,6 +47,7 @@ public class Player : MonoBehaviour
         animator        = GetComponent<Animator>();
         spriteRenderer  = GetComponent<SpriteRenderer>();
         spotLight       = GetComponent<Light2D>();
+        audioSource     = GetComponent<AudioSource>();
 
         normalOffset    = capsule.offset;
         crouchOffset    = capsule.offset;
@@ -54,6 +60,9 @@ public class Player : MonoBehaviour
         dumpSize.y      = capsule.size.y * 0.8f; 
 
         StartCoroutine(Begin());
+
+        audioSource.clip = jumpSFX;
+        audioSource.Play();
     }
 
     void Update() {
@@ -71,6 +80,11 @@ public class Player : MonoBehaviour
             proxSpeed = 0;
             spriteRenderer.flipX = false;
             return;
+        }
+
+        if(Coins == 100) {
+            HP = 4;
+            Coins = 0;
         }
 
         if(isCrouching && isGrounded) 
@@ -229,6 +243,7 @@ public class Player : MonoBehaviour
     }
 
     public void endLevel() {
+        dead = false;
         StartCoroutine(End());
     }
 
@@ -261,7 +276,7 @@ public class Player : MonoBehaviour
 
         // Wait before loading the scene
         yield return new WaitForSeconds(1f);
-        SceneManager.LoadScene("main");
+        SceneManager.LoadScene(dead? SceneManager.GetActiveScene().name : nextScene);
     }
 
     IEnumerator Begin() {

@@ -12,11 +12,7 @@ public class Coin : MonoBehaviour
 
     public void Take()
     {
-        StartCoroutine(destroySelf());
-    }
-
-    IEnumerator destroySelf() {
         Destroy(gameObject);
-        yield break;
     }
+    
 }
