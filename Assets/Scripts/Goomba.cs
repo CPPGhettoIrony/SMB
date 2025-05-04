@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class Goomba : MonoBehaviour, Enemy
@@ -7,6 +8,9 @@ public class Goomba : MonoBehaviour, Enemy
     Rigidbody2D rb;
     Collider2D cl;
     Animator animator;
+
+    public GameObject pointA, pointB;
+    GameObject point;
 
     float speed = 4, hspeed = 0;
     bool dead = false;
@@ -17,6 +21,8 @@ public class Goomba : MonoBehaviour, Enemy
         rb          = GetComponent<Rigidbody2D>();
         cl          = GetComponent<Collider2D>();    
         animator    = GetComponent<Animator>();
+
+        point = pointB;
     }
 
     // Update is called once per frame
@@ -27,8 +33,15 @@ public class Goomba : MonoBehaviour, Enemy
     void FixedUpdate()
     {
         if(dead) return;
-        if (rb.linearVelocityX == 0)
+
+        float distance = math.abs(transform.position.x - point.transform.position.x);
+
+        Debug.Log(distance);
+
+        if(distance < 1) {
             direction = -direction;
+            point = (point == pointB)? pointA : pointB;
+        }
 
         hspeed = direction * speed;
         rb.linearVelocityX = hspeed;

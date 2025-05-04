@@ -60,9 +60,6 @@ public class Player : MonoBehaviour
         dumpSize.y      = capsule.size.y * 0.8f; 
 
         StartCoroutine(Begin());
-
-        audioSource.clip = jumpSFX;
-        audioSource.Play();
     }
 
     void Update() {
