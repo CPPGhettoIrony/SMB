@@ -36,8 +36,6 @@ public class Goomba : MonoBehaviour, Enemy
 
         float distance = math.abs(transform.position.x - point.transform.position.x);
 
-        Debug.Log(distance);
-
         if(distance < 1) {
             direction = -direction;
             point = (point == pointB)? pointA : pointB;

@@ -192,9 +192,9 @@ public class Player : MonoBehaviour
             case 9:
 
                 Rigidbody2D erb = collision.gameObject.GetComponent<Rigidbody2D>();
-                BoxCollider2D ebc =  collision.gameObject.GetComponent<BoxCollider2D>();
+                CapsuleCollider2D ebc =  collision.gameObject.GetComponent<CapsuleCollider2D>();
                 Enemy e = collision.gameObject.GetComponent<Enemy>();
-                float yDamageLine =  erb.transform.position.y - ebc.bounds.size.y * 0.75f;
+                float yDamageLine =  erb.transform.position.y - ebc.size.y * 0.75f;
 
                 if (!isGrounded && rb.transform.position.y > yDamageLine) {
                     e.kill();

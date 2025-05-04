@@ -4,7 +4,6 @@ public class Mushroom : MonoBehaviour, Powerup
 {
     
     Rigidbody2D rb;
-    Collider2D cl;
 
     public int type;
 
@@ -14,7 +13,6 @@ public class Mushroom : MonoBehaviour, Powerup
     void Start()
     {
         rb          = GetComponent<Rigidbody2D>();
-        cl          = GetComponent<Collider2D>();   
         rb.AddForce(Vector2.up * 5, ForceMode2D.Impulse); 
 
         direction = Random.Range(0, 1)==1? 1 : -1;
