@@ -189,6 +189,10 @@ public class Player : MonoBehaviour
                 collideWithFloor(collision);
                 break;
 
+           case 12:
+                collideWithFloor(collision);
+                break;
+
             case 9:
 
                 Rigidbody2D erb = collision.gameObject.GetComponent<Rigidbody2D>();
@@ -316,9 +320,15 @@ public class Player : MonoBehaviour
         }
     }
 
+    void OnCollisionStay2D(Collision2D collision)
+    {
+        if(collision.gameObject.layer == 12)
+            takeDamage();
+    }
+
     void OnCollisionExit2D(Collision2D collision)
     {
-        if(collision.gameObject.layer == 3 || collision.gameObject.layer == 10) 
+        if(collision.gameObject.layer == 3 || collision.gameObject.layer == 10 || collision.gameObject.layer == 12) 
             isGrounded = false;    
     }
 
