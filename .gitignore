@@ -64,7 +64,8 @@ sysinfo.txt
 *.app
 *.x86_64
 
-*.so 
+*.so
+*.so.*
 
 /SMB_BurstDebugInformation_DoNotShip/
 /test_Data/
