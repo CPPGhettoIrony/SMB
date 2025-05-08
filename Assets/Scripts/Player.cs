@@ -79,7 +79,7 @@ public class Player : MonoBehaviour
             return;
         }
 
-        if(Coins == 100) {
+        if(Coins >= 100) {
             HP = 4;
             Coins = 0;
         }
