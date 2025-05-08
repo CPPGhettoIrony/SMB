@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
     public bool levelEnd = false;
     float jumpCounter = 0, movement, proxSpeed, hspeed = 0;
     float speed = 10, jumpMax = 15;
-    int face = 1;
+    public int face = 1;
 
     public TextMeshProUGUI coinText;
     public Image healthHUD;
@@ -226,6 +226,7 @@ public class Player : MonoBehaviour
         jumpCounter = 0;
         animator.SetTrigger("dead");
         rb.bodyType = RigidbodyType2D.Kinematic;
+        capsule.enabled = false;
         rb.linearVelocity = Vector2.zero;
         dead = true;
         StartCoroutine(End());
@@ -318,6 +319,12 @@ public class Player : MonoBehaviour
                 ++Coins;
             break;
         }
+    }
+
+    void OnTriggerStay2D(Collider2D collision)
+    {
+        if(collision.gameObject.layer == 12)
+            takeDamage();
     }
 
     void OnCollisionStay2D(Collision2D collision)

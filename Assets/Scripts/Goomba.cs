@@ -49,6 +49,7 @@ public class Goomba : MonoBehaviour, Enemy
         animator.SetTrigger("stomped");
         dead = true;
         rb.linearVelocityX = 0;
+        rb.linearVelocityY = 0;
         cl.enabled = false;
         rb.bodyType = RigidbodyType2D.Kinematic;
         yield return new WaitForSeconds(1.5f);
