@@ -6,6 +6,7 @@ using UnityEngine.Rendering.Universal;
 public class titlescreen : MonoBehaviour
 {
     
+    public string nextlevel;
     Light2D spotLight;
     bool transition = true;
 
@@ -38,7 +39,7 @@ public class titlescreen : MonoBehaviour
 
         // Wait before loading the scene
         yield return new WaitForSeconds(1f);
-        SceneManager.LoadScene("level1");
+        SceneManager.LoadScene(nextlevel);
     }
 
     IEnumerator Begin() {
