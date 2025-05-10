@@ -29706,6 +29706,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1636863732}
     - target: {fileID: 9019160372486549687, guid: 71a40db0d45c910a7880bed5ccf22d82, type: 3}
+      propertyPath: nextScene
+      value: endscreen
+      objectReference: {fileID: 0}
+    - target: {fileID: 9019160372486549687, guid: 71a40db0d45c910a7880bed5ccf22d82, type: 3}
       propertyPath: allowCameraXFollow
       value: 1
       objectReference: {fileID: 0}
