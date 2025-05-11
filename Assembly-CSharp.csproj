@@ -58,7 +58,6 @@
     <Compile Include="Assets/Scripts/titlescreen.cs" />
     <Compile Include="Assets/Scripts/qBlock.cs" />
     <Compile Include="Assets/Scripts/Goomba.cs" />
-    <Compile Include="Assets/Scripts/Coin.cs" />
     <Compile Include="Assets/Scripts/bBlock.cs" />
     <Compile Include="Assets/Scripts/blockCoin.cs" />
     <Compile Include="Assets/Scripts/Mushroom.cs" />
