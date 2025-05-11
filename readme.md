@@ -5,6 +5,7 @@
 - vecteezy.com (for the world map bridge texture)
 - Gatete a.k.a Catezeey (for the health hud)
 - ArnuroMinigon (for the enemy sprites)
+- Murphmario & Barack Obama (for the boo sprites)
 
 I dont know any of these people personally and I'm not asociated with vecteezy
 
