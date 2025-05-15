@@ -889,6 +889,7 @@ MonoBehaviour:
   hurtSFX: {fileID: 8300000, guid: 41900419a90bd09958597adfe3630ae5, type: 3}
   deathSFX: {fileID: 8300000, guid: f7176296bdb32a229896784af5e810f3, type: 3}
   levelEnd: 0
+  face: 1
   coinText: {fileID: 5802779749247684758}
   healthHUD: {fileID: 159281090805734991}
   healthSpr:
